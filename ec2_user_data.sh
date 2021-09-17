@@ -24,6 +24,8 @@ sudo usermod -a -G docker ec2-user
 mkdir nginx-conf
 aws s3 cp s3://nginx.alessandro.stagni/config/nginx.conf ./nginx-conf/nginx.conf
 docker run -d -p 80:80 -v /nginx-conf:/etc/nginx/ --name nginx-server nginx
-sudo systemctl start httpd
-sudo systemctl enable httpd
-echo "<h1>Terraform Instance Launched Successfully</h1>" | sudo tee /var/www/html/index.html
+
+# Run logging script
+mkdir logger
+aws s3 cp s3://nginx.alessandro.stagni/script/logger.sh ./logger/logger.sh
+bash logger/logger.sh
