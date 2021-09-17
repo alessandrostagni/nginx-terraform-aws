@@ -1,27 +1,29 @@
 
-#! /bin/bash
+#!/bin/bash
 
 # OS FIREWALLING CHANGES
 # Allow only HTTP connections
-iptables -t filter -F 
-iptables -t filter -X
+# echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts # Used to avoid this error: 
+sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+# Keep DNS port open
+sudo iptables -A OUTPUT -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp --sport 53 -m state --state ESTABLISHED -j ACCEPT 
+#sudo iptables -t filter -P INPUT DROP 
 
-iptables -t filter -P INPUT DROP 
-iptables -t filter -P FORWARD DROP 
-iptables -t filter -P OUTPUT DROP
-
-iptables -t filter -A OUTPUT -p tcp --dport 80 -j ACCEPT
-iptables -t filter -A INPUT -p tcp --dport 80 -j ACCEPT
 
 # DOCKER INSTALLATION
-sudo apt update
-sudo apt install -y docker-ce
-sudo usermod -aG docker admin
+sudo yum update
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo usermod -a -G docker ec2-user
 
+# Run NGINX container with custom configuration
 mkdir nginx-conf
-aws s3 cp alessandro_bucket/config/nginx.conf ./nginx-conf/nginx.conf
-
-docker run -d -p 80:80 -v nginx-conf /etc/nginx/ --name nginx-server nginx
+aws s3 cp s3://nginx.alessandro.stagni/config/nginx.conf ./nginx-conf/nginx.conf
+docker run -d -p 80:80 -v /nginx-conf:/etc/nginx/ --name nginx-server nginx
 sudo systemctl start httpd
 sudo systemctl enable httpd
 echo "<h1>Terraform Instance Launched Successfully</h1>" | sudo tee /var/www/html/index.html

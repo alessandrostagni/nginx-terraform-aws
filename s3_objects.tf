@@ -7,7 +7,7 @@ resource "aws_s3_bucket_object" "logger" {
 
 resource "aws_s3_bucket_object" "nginx-config" {
     bucket = aws_s3_bucket.alessandro_bucket.id
-    key = "config/logger.py"
+    key = "config/nginx.conf"
     source = "${path.module}/config/nginx.conf"
     source_hash = filemd5("${path.module}/config/nginx.conf")
 }

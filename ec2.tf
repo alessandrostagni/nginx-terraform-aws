@@ -1,7 +1,8 @@
 resource "aws_instance" "alessandro_instance" {
-  ami           = "ami-0567f647e75c7bc05" # Ubuntu AMI by now.
+  ami           = "ami-0210560cedcb09f07" # Amazon Linux AMI.
   instance_type = "t2.micro" # Should be enough for this purpose
   user_data = "${file("ec2_user_data.sh")}"
+  iam_instance_profile = aws_iam_instance_profile.alessandro_instance_profile.id
 
   credit_specification {
     cpu_credits = "unlimited"
