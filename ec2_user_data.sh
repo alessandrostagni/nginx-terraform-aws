@@ -6,6 +6,7 @@
 # echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts # Used to avoid this error: 
 sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 8000 -j ACCEPT
 # Keep DNS port open
 sudo iptables -A OUTPUT -p udp --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
@@ -29,3 +30,8 @@ docker run -d -p 80:80 -v /nginx-conf:/etc/nginx/ --name nginx-server nginx
 mkdir logger
 aws s3 cp s3://nginx.alessandro.stagni/script/logger.sh ./logger/logger.sh
 bash logger/logger.sh
+
+# Search Script
+
+pip3 install -r script/requirements.txt
+python3 search.py

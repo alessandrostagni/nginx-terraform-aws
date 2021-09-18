@@ -42,6 +42,18 @@ resource "aws_security_group" "allow_http" {
       self = false
     },
 
+    {
+      description      = "HTTP"
+      from_port        = 8000
+      to_port          = 8000
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]  
+      ipv6_cidr_blocks = []
+      prefix_list_ids = []
+      security_groups = []
+      self = false
+    },
+
     # NEEDS TO BE REMOVED AFTERWARDS
     {
       description      = "HTTP"
