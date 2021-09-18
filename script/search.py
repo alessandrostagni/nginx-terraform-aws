@@ -4,6 +4,8 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+TIMESTAMP_PREFIX = 'Timestamp: '
+
 
 def search_logs(start_date, end_date):
     record = ''
@@ -18,8 +20,8 @@ def search_logs(start_date, end_date):
                     results.append(record)
                 record = ''
                 discard = False
-            elif row.startswith('Date:'):
-                date = parser.parse(row.replace('Date: ', ''))
+            elif row.startswith(TIMESTAMP_PREFIX):
+                date = parser.parse(row.replace(TIMESTAMP_PREFIX, ''))
                 if date >= start_date and date <= end_date:
                     record += row
                 else:
