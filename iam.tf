@@ -39,7 +39,7 @@ resource "aws_iam_policy" "alessandro_instance_policy" {
                 "Sid": "AlessandroBucketDownload",
                 "Action": "s3:GetObject",
                 "Effect": "Allow",
-                "Resource": "${aws_s3_bucket.alessandro_bucket.arn}"
+                "Resource": "${aws_s3_bucket.alessandro_bucket.arn}/*"
             }
         ]
     })

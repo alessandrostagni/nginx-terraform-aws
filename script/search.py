@@ -15,7 +15,7 @@ def search_logs(start_date, end_date):
     discard = False
     with open('/var/log/nginx-container/resource.log') as log:
         for row in log:
-            if row == '\n':
+            if row == '---\n':
                 if not discard:
                     results.append(record)
                 record = ''
