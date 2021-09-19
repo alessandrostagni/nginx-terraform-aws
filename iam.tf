@@ -1,5 +1,7 @@
 resource "aws_iam_role" "alessandro_instance_role" {
   name = "alessandro-instance-role"
+  
+  # Needed so that ec2 instances can assume the role
   assume_role_policy = jsonencode({
         "Version": "2012-10-17",
         "Statement": [
@@ -23,6 +25,7 @@ resource "aws_iam_policy" "alessandro_instance_policy" {
     name = "alessandro-instance-policy"
     description = "Policy for allowing access to s3 files to Alessandro instance."
 
+    # Bucket is encrypted with KMS, so need both S3 and KMS permissions
     policy = jsonencode({
         "Version": "2012-10-17",
         "Statement": [

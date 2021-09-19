@@ -12,7 +12,7 @@ resource "aws_instance" "alessandro_instance" {
   vpc_security_group_ids = [aws_security_group.allow_http.id]
   
   # Uncomment the attribute below if you need SSH access to the instance
-  # key_name = aws_key_pair.alessandro_key.key_name
+  key_name = aws_key_pair.alessandro_key.key_name
   
   associate_public_ip_address = true
 }

@@ -41,7 +41,7 @@ resource "aws_security_group" "allow_http" {
       security_groups = []
       self = false
     },
-
+# 
     {
       description      = "HTTP"
       from_port        = 8000
@@ -54,7 +54,7 @@ resource "aws_security_group" "allow_http" {
       self = false
     },
 
-    # NEEDS TO BE REMOVED AFTERWARDS
+    # Uncomment below if you need ssh
     {
       description      = "HTTP"
       from_port        = 22
