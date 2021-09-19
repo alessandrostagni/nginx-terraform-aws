@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 TIMESTAMP_PREFIX = 'Timestamp: '
 LOG_SEPARATOR = '---\n'
