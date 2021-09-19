@@ -6,8 +6,8 @@ USER_FOLDER=/home/ec2-user
 # OS FIREWALL CHANGES
 # Drop packets if they do not match any of the above exceptions.
 sudo iptables -P INPUT DROP
-# Uncomment the rule below if you need ssh access to the instance
-sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT 
+# Uncomment the rule below if you need SSH access to the instance
+# sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT 
 sudo iptables -A INPUT -p udp --sport 53 -j ACCEPT # Needed for DNS
 sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT # Needed for nginx
 sudo iptables -A INPUT -p tcp --sport 80 -j ACCEPT # Needed for installing packages.
